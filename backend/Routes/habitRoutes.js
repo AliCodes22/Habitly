@@ -1,34 +1,22 @@
 const express = require("express");
 const router = express.Router();
+const {
+  getHabits,
+  createHabit,
+  updateHabit,
+  deleteHabit,
+} = require("../Controllers/habitController");
 
 // get all habits
-router.get("/", (req, res) => {
-  res.status(200).json({
-    message: "get habits route",
-  });
-});
+router.get("/", getHabits);
 
 // create new habit
-router.post("/", (req, res) => {
-  res.status(201).json({
-    message: "create habit",
-  });
-});
+router.post("/", createHabit);
 
 // update habit
-router.patch("/:id", (req, res) => {
-  const { id } = req.params;
-
-  res.status(200).json({
-    message: `update habit ${id}`,
-  });
-});
+router.patch("/:id", updateHabit);
 
 // delete habit
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  res.status(200).json({
-    message: `Delete habit ${id} `,
-  });
-});
+router.delete("/:id", deleteHabit);
+
 module.exports = { router };
