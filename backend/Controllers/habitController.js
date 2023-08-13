@@ -15,7 +15,7 @@ const createHabit = (req, res) => {
       message: "create habit",
     });
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 };
 
@@ -27,7 +27,7 @@ const updateHabit = (req, res) => {
       message: "update habit",
     });
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 };
 
@@ -39,7 +39,7 @@ const deleteHabit = (req, res) => {
       message: `Delete habit ${id} `,
     });
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 };
 
