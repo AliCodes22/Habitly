@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/habits", router);
 
 app.use(errorHandler);
-app.use(notFound);
 
 app.listen(port, () => {
   console.log(`server on ${port}`);

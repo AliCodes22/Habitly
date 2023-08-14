@@ -1,3 +1,12 @@
+const { MongoClient } = require("mongodb");
+require("dotenv").config();
+const { MONGO_URI } = process.env;
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+const { v4: uuidv4 } = require("uuid");
+
 // get habits
 const getHabits = (req, res, next) => {
   try {
@@ -11,6 +20,9 @@ const getHabits = (req, res, next) => {
 };
 
 const createHabit = (req, res, next) => {
+  if (!req.body.text) {
+    throw new Error("please enter text");
+  }
   try {
     res.status(201).json({
       message: "create habit",
