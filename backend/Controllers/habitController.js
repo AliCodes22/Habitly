@@ -1,25 +1,26 @@
 // get habits
-const getHabits = (req, res) => {
+const getHabits = (req, res, next) => {
   try {
     res.status(200).json({
-      message: "get habits",
+      message: "working habits",
+      status: 200,
     });
   } catch (err) {
-    console.log(err.message);
+    next(err);
   }
 };
 
-const createHabit = (req, res) => {
+const createHabit = (req, res, next) => {
   try {
     res.status(201).json({
       message: "create habit",
     });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
-const updateHabit = (req, res) => {
+const updateHabit = (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -27,11 +28,11 @@ const updateHabit = (req, res) => {
       message: "update habit",
     });
   } catch (err) {
-    console.log(err);
+    res.status(err.status).json;
   }
 };
 
-const deleteHabit = (req, res) => {
+const deleteHabit = (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -39,7 +40,7 @@ const deleteHabit = (req, res) => {
       message: `Delete habit ${id} `,
     });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
