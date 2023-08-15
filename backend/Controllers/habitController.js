@@ -8,8 +8,13 @@ const options = {
 const { v4: uuidv4 } = require("uuid");
 
 // get habits
-const getHabits = (req, res, next) => {
+const getHabits = async (req, res, next) => {
+  const client = new MongoClient(MONGO_URI, options);
+
   try {
+    await client.connect();
+    const db = client.db("habitly");
+
     res.status(200).json({
       message: "working habits",
       status: 200,
@@ -19,11 +24,17 @@ const getHabits = (req, res, next) => {
   }
 };
 
-const createHabit = (req, res, next) => {
+const createHabit = async (req, res, next) => {
   if (!req.body.text) {
     throw new Error("please enter text");
   }
+
+  const client = new MongoClient(MONGO_URI, options);
+
   try {
+    await client.connect();
+    const db = client.db("habitly");
+
     res.status(201).json({
       message: "create habit",
     });
