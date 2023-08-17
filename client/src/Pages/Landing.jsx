@@ -49,11 +49,13 @@ const Wrapper = styled.section`
   }
   h1 {
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
   }
   p {
+    font-size: 1.2rem;
     line-height: 2;
-    color: #64748b;
+    color: #e1d3ec;
     margin-bottom: 1.5rem;
     max-width: 35em;
   }
