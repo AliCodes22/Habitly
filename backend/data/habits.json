@@ -1,0 +1,25 @@
+[
+  {
+    "habitName": "meditate 10 mins per day",
+    "time": "after getting out of the shower in the morning",
+    "place": "bedroom",
+    "why": "to develop more presence in life",
+    "category": "spiritual"
+  },
+
+  {
+    "habitName": "read 10 pages a day",
+    "time": "while going to bed",
+    "place": "bed",
+    "why": "for a more peaceful sleep",
+    "category": "education"
+  },
+
+  {
+    "habitName": "no more than 2 hours of phone use",
+    "time": "entire day",
+    "place": "N/A",
+    "why": "to use time effectively",
+    "category": "health"
+  }
+]
