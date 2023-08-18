@@ -1,24 +1,24 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Input from "../Components/Input";
 
 const Register = () => {
   return (
     <Wrapper>
       <form className="form">
         <h4>Register</h4>
-        <div className="form-row">
-          <label htmlFor="name" className="form-label">
-            Name
-          </label>
-          <input type="text" id="name" name="name" className="form-input" />
-        </div>
+        <Input name="name" type="text" labelText="Name" />
+        <Input name="email" type="email" labelText="Email" />
+        <Input name="password" type="password" labelText="Password" />
         <button type="submit" className="btn btn-block">
           Submit
         </button>
-        <p>Already a user?</p>
-        <Link to="/login" className="member-btn btn">
-          Login
-        </Link>
+        <p>
+          Already a user?{" "}
+          <Link to="/login" className="member-btn btn">
+            Login
+          </Link>
+        </p>
       </form>
     </Wrapper>
   );
