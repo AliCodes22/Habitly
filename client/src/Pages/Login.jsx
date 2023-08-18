@@ -1,24 +1,16 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Input from "../Components/Input";
 
-const Register = () => {
+const Login = () => {
   return (
     <Wrapper>
       <form className="form">
-        <h4>Register</h4>
-        <Input name="name" type="text" labelText="Name" />
+        <h4>Welcome to Habitly!</h4>
         <Input name="email" type="email" labelText="Email" />
         <Input name="password" type="password" labelText="Password" />
         <button type="submit" className="btn btn-block">
-          Submit
+          Login
         </button>
-        <p>
-          Already a user?{" "}
-          <Link to="/login" className="member-btn btn">
-            Login
-          </Link>
-        </p>
       </form>
     </Wrapper>
   );
@@ -70,8 +62,8 @@ const Wrapper = styled.section`
 
   h4 {
     text-align: center;
-    margin-bottom: 1.38rem;
     font-size: 2rem;
+    margin-bottom: 2rem;
   }
   p {
     margin-top: 1rem;
@@ -91,4 +83,4 @@ const Wrapper = styled.section`
   }
 `;
 
-export default Register;
+export default Login;
