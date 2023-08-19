@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/habits", router);
-app.use("/api/v1", require("./Routes/userRoutes"));
+app.use("/api/user", require("./Routes/userRoutes"));
 // app.use("/api/auth", authRouter)
 
 app.use(errorHandler);
