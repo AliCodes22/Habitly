@@ -1,15 +1,54 @@
 import styled from "styled-components";
+import axios from "axios";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../Components/Input";
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = axios.post("/api/user/register", formData);
+    console.log(res);
+  };
   return (
     <Wrapper>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <h4>Register</h4>
-        <Input name="name" type="text" labelText="Name" />
-        <Input name="email" type="email" labelText="Email" />
-        <Input name="password" type="password" labelText="Password" />
+        <Input
+          name="name"
+          type="text"
+          labelText="Name"
+          value={formData.name}
+          onChange={handleChange}
+        />
+        <Input
+          name="email"
+          type="email"
+          labelText="Email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+        <Input
+          name="password"
+          type="password"
+          labelText="Password"
+          onChange={handleChange}
+          value={formData.password}
+        />
         <button type="submit" className="btn btn-block">
           Submit
         </button>
