@@ -4,6 +4,7 @@ const port = process.env.PORT || 5000;
 const { errorHandler, notFound } = require("./Middleware/errorMiddleware");
 const { router } = require("./Routes/habitRoutes");
 const { userRouter } = require("./Routes/userRoutes");
+const cors = require("cors");
 
 const app = express();
 
