@@ -1,4 +1,4 @@
-const Input = ({ type, name, labelText }) => {
+const Input = ({ type, name, labelText, onChange }) => {
   return (
     <div className="form-row">
       <label htmlFor={name}>{labelText || name}</label>
@@ -7,6 +7,7 @@ const Input = ({ type, name, labelText }) => {
         id={name}
         name={name}
         className="form-input"
+        onChange={onChange}
         required
       />
     </div>

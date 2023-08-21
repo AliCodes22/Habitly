@@ -21,9 +21,20 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = axios.post("/api/user/register", formData);
-    console.log(res);
+    try {
+      const res = await fetch("/api/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+    } catch (err) {
+      console.log(err.message);
+    }
   };
+
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
