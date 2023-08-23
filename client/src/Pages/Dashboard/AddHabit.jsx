@@ -1,5 +1,5 @@
 const AddHabit = () => {
-  return <div>AddHabit</div>;
+  return <div>Add Habit</div>;
 };
 
 export default AddHabit;
