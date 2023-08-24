@@ -6,7 +6,9 @@ const {
   updateHabit,
   deleteHabit,
 } = require("../Controllers/habitController");
+const requireAuth = require("../Middleware/authMiddleware");
 
+router.use(requireAuth);
 // get all habits
 router.get("/", getHabits);
 
