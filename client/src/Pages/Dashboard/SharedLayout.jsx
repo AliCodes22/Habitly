@@ -1,5 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Navbar from "../../Components/Navbar";
 import BigSidebar from "../../Components/BigSidebar";
 import SmallSidebar from "../../Components/SmallSidebar";
@@ -7,7 +7,19 @@ import styled from "styled-components";
 import { AuthContext } from "../../Context/userContext";
 
 const SharedLayout = () => {
-  return (
+  const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(AppContext);
+
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    setUser(loggedInUser);
+    setIsLoggedIn(false);
+  }, [user]);
+
+  return !user ? (
+    <div>
+      <h1>User Not Found</h1>
+    </div>
+  ) : (
     <Wrapper>
       <main className="dashboard">
         <SmallSidebar />
