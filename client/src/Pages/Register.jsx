@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../Components/Input";
 
 const Register = () => {
@@ -17,6 +17,8 @@ const Register = () => {
     }));
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,6 +31,10 @@ const Register = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      const token = JSON.stringify(data.token);
+
+      localStorage.setItem("token", token);
+      navigate("/dashboard");
     } catch (err) {
       console.log(err.message);
     }

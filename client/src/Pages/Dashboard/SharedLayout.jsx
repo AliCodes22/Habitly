@@ -1,14 +1,24 @@
 import { Link, Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Navbar from "../../Components/Navbar";
+import BigSidebar from "../../Components/BigSidebar";
+import SmallSidebar from "../../Components/SmallSidebar";
 import styled from "styled-components";
+import { AuthContext } from "../../Context/userContext";
 
 const SharedLayout = () => {
   return (
     <Wrapper>
-      <nav>
-        <Link to="/dashboard/habits">All Habits</Link>
-        <Link to="/dashboard/new-habit">Add habit</Link>
-      </nav>
-      <Outlet />
+      <main className="dashboard">
+        <SmallSidebar />
+        <BigSidebar />
+        <div>
+          <Navbar />
+          <div className="dashboard-page">
+            <Outlet />
+          </div>
+        </div>
+      </main>
     </Wrapper>
   );
 };
