@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
+const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -8,6 +9,11 @@ const { MONGO_URI } = process.env;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+};
+
+// create token
+const createToken = (_id) => {
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
 
 const client = new MongoClient(MONGO_URI, options);
@@ -56,9 +62,12 @@ const registerUser = async (req, res) => {
 
     await db.collection("users").insertOne(user);
 
+    const token = createToken(user._id);
+
     res.status(201).json({
       status: 201,
       data: user,
+      token,
     });
   } catch (err) {
     res.status(404).json({
