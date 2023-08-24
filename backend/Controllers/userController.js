@@ -18,11 +18,37 @@ const createToken = (_id) => {
 
 const client = new MongoClient(MONGO_URI, options);
 
-const loginUser = (req, res) => {
-  res.status(201).json({
-    message: "login user",
-    status: 201,
-  });
+const loginUser = async (req, res) => {
+  await client.connect();
+
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new Error("Incomplete fields");
+  }
+
+  try {
+    const db = client.db("habitly");
+    const user = await db.collection("users").findOne({ email });
+    const match = await bcrypt.compare(password, user.password);
+    const token = createToken(user._id);
+
+    if (!match) {
+      return res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
+
+    res.status(201).json({
+      data: user,
+      token,
+      status: 201,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
 };
 
 const registerUser = async (req, res) => {
@@ -30,7 +56,6 @@ const registerUser = async (req, res) => {
 
   try {
     const db = await client.db("habitly");
-
     const { name, email, password } = req.body;
 
     if (!email || !password || !name) {
