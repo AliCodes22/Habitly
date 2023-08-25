@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { AuthContext } from "../../Context/userContext";
 
 const SharedLayout = () => {
-  const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(AppContext);
+  const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem("user"));
@@ -15,11 +15,7 @@ const SharedLayout = () => {
     setIsLoggedIn(false);
   }, [user]);
 
-  return !user ? (
-    <div>
-      <h1>User Not Found</h1>
-    </div>
-  ) : (
+  return (
     <Wrapper>
       <main className="dashboard">
         <SmallSidebar />

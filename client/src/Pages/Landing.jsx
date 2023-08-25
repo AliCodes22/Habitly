@@ -36,6 +36,12 @@ const Wrapper = styled.section`
     align-items: center;
   }
 
+  .logo {
+    display: flex;
+    align-items: center;
+    width: 100px;
+  }
+
   .container {
     width: 90vw;
     max-width: 1120px;
