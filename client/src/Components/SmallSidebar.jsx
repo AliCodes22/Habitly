@@ -1,9 +1,30 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import { AuthContext } from "../Context/userContext";
+import { FaTimes } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import links from "../utils/links";
+import NavLinks from "./NavLinks";
 
 const SmallSidebar = () => {
+  const { toggleSidebar, showSidebar } = useContext(AuthContext);
   return (
     <Wrapper>
-      <h4>Small Sidebar</h4>
+      <div
+        className={
+          showSidebar ? "sidebar-container show-sidebar" : "sidebar-container"
+        }
+      >
+        <div className="content">
+          <button type="button" className="close-btn" onClick={toggleSidebar}>
+            <FaTimes />
+          </button>
+          <header>
+            <h2>Habitly</h2>
+          </header>
+          <NavLinks toggleSidebar={toggleSidebar} />
+        </div>
+      </div>
     </Wrapper>
   );
 };
@@ -62,7 +83,7 @@ const Wrapper = styled.div`
 
     padding: 1rem 0;
     text-transform: capitalize;
-    transition: var(--transition);
+    transition: 0.3s ease-in-out all;
   }
   .nav-link:hover {
     color: #64748b;

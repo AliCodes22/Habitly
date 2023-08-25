@@ -4,24 +4,23 @@ import { FaAlignLeft, FaUserCircle, FaCaretDown, FaUser } from "react-icons/fa";
 import { AuthContext } from "../Context/userContext";
 
 const Navbar = () => {
+  const { showSidebar, setShowSidebar, toggleSidebar } =
+    useContext(AuthContext);
+
   return (
     <Wrapper>
       <div className="nav-center">
-        <button
-          type="button"
-          className="toggle-btn"
-          onClick={() => {
-            console.log("toggle");
-          }}
-        >
+        <button type="button" className="toggle-btn" onClick={toggleSidebar}>
           <FaAlignLeft />
         </button>
         <div>
-          <h3 className="logo-text">Dashboard</h3>
+          <h3 className="logo-text">dashboard</h3>
         </div>
         <div className="btn-container">
           <button type="button" className="btn">
-            <FaUserCircle /> Ali <FaCaretDown />
+            <FaUserCircle />
+            Ali
+            <FaCaretDown />
           </button>
         </div>
       </div>
