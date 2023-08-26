@@ -13,7 +13,7 @@ const links = [
   },
   {
     id: 3,
-    text: "Create a new habit",
+    text: "New habit",
     path: "/dashboard/new-habit",
     icon: <FaWpforms />,
   },

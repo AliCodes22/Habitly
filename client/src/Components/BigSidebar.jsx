@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import NavLinks from "./NavLinks";
 
 const BigSidebar = () => {
   return (
     <Wrapper>
-      <h4>Big</h4>
+      <NavLinks />
     </Wrapper>
   );
 };
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
     display: block;
     box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.1);
     .sidebar-container {
-      background: #fff
+      background: #fff;
       min-height: 100vh;
       height: 100%;
       width: 250px;
@@ -42,15 +43,16 @@ const Wrapper = styled.div`
     .nav-link {
       display: flex;
       align-items: center;
-      color:  #64748b;
+      color: #234069;
       padding: 1rem 0;
-      padding-left: 2.5rem;
+      padding-left: 1.2rem;
+      padding-right: 1.2rem;
       text-transform: capitalize;
       transition: padding-left 0.3s ease-in-out;
     }
     .nav-link:hover {
       padding-left: 3rem;
-      color:  #2cb1bc;
+      color: #2cb1bc;
       transition: 0.3s ease-in-out all;
     }
     .icon {
@@ -60,7 +62,7 @@ const Wrapper = styled.div`
       place-items: center;
     }
     .active {
-      color:  #2cb1bc;
+      color: #2cb1bc;
     }
     .pending {
       background: #f8fafc;
