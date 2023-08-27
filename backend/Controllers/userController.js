@@ -71,7 +71,7 @@ const registerUser = async (req, res) => {
       name,
       password: hashedPassword,
       email,
-      habits: {},
+      habits: [],
       userId: uuidv4(),
     };
 
