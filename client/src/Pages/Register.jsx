@@ -34,13 +34,19 @@ const Register = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      console.log(data);
+
+      const { name, email } = data.data;
       const token = JSON.stringify(data.token);
 
       localStorage.setItem("token", token);
-      setUser(token);
+      localStorage.setItem("name", JSON.stringify(name));
+      localStorage.setItem("email", JSON.stringify(email));
+
+      setUser({ name, email });
       navigate("/dashboard");
     } catch (err) {
-      console.log(err.message);
+      window.alert(err.message);
     }
   };
 

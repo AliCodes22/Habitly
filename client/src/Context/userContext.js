@@ -1,7 +1,5 @@
 import { useState, createContext } from "react";
 
-const token = localStorage.getItem("token");
-
 const initialState = {
   showSidebar: false,
 };
@@ -9,7 +7,10 @@ const initialState = {
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+  });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
 

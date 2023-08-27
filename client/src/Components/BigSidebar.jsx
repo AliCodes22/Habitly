@@ -73,7 +73,7 @@ const Wrapper = styled.div`
       place-items: center;
     }
     .active {
-      color: #2cb1bc;
+      color: #8c4186;
     }
     .pending {
       background: #f8fafc;

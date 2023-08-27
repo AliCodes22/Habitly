@@ -17,7 +17,7 @@ const links = [
     path: "/dashboard/new-habit",
     icon: <FaWpforms />,
   },
-  { id: 4, text: "Profile", path: "/dashboard/profile", icon: <ImProfile /> },
+  { id: 4, text: "Profile", path: "/dashboard", icon: <ImProfile /> },
 ];
 
 export default links;
