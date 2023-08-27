@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/userContext";
 import Input from "../Components/Input";
 
 const Register = () => {
@@ -16,6 +17,8 @@ const Register = () => {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const { setUser, user } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -34,6 +37,7 @@ const Register = () => {
       const token = JSON.stringify(data.token);
 
       localStorage.setItem("token", token);
+      setUser(token);
       navigate("/dashboard");
     } catch (err) {
       console.log(err.message);

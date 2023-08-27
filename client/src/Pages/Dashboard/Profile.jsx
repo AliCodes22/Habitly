@@ -1,5 +1,15 @@
+import { AuthContext } from "../../Context/userContext";
+import { useState, useEffect, useContext } from "react";
+
 const Profile = () => {
-  return <div>Profile</div>;
+  const { user, setUser, setIsLoggedIn, setShowSideBar } =
+    useContext(AuthContext);
+
+  return (
+    <div>
+      <h2>Profile</h2>
+    </div>
+  );
 };
 
 export default Profile;

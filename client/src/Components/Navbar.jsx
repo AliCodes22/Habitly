@@ -45,7 +45,7 @@ const Wrapper = styled.nav`
     background: transparent;
     border-color: transparent;
     font-size: 1.75rem;
-    color: #2cb1bc;
+    color: #c20064;
     cursor: pointer;
     display: flex;
     align-items: center;

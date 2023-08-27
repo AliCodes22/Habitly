@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import Navbar from "../../Components/Navbar";
 import BigSidebar from "../../Components/BigSidebar";
@@ -10,12 +10,16 @@ const SharedLayout = () => {
   const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    const loggedInUser = JSON.parse(localStorage.getItem("token"));
     setUser(loggedInUser);
-    setIsLoggedIn(false);
+    setIsLoggedIn(true);
   }, [user]);
 
-  return (
+  const navigate = useNavigate();
+
+  return !user ? (
+    navigate("/login")
+  ) : (
     <Wrapper>
       <main className="dashboard">
         <SmallSidebar />

@@ -1,10 +1,21 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import { AuthContext } from "../Context/userContext";
 import NavLinks from "./NavLinks";
 
 const BigSidebar = () => {
+  const { showSidebar, setShowSidebar } = useContext(AuthContext);
   return (
     <Wrapper>
-      <NavLinks />
+      <div
+        className={
+          showSidebar ? "sidebar-container" : "sidebar-container show-sidebar"
+        }
+      >
+        <div className="content">
+          <NavLinks />
+        </div>
+      </div>
     </Wrapper>
   );
 };
@@ -15,7 +26,7 @@ const Wrapper = styled.div`
     display: block;
     box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.1);
     .sidebar-container {
-      background: #fff;
+      background: #ff6c3bb5;
       min-height: 100vh;
       height: 100%;
       width: 250px;
@@ -43,7 +54,7 @@ const Wrapper = styled.div`
     .nav-link {
       display: flex;
       align-items: center;
-      color: #234069;
+      color: #030703;
       padding: 1rem 0;
       padding-left: 1.2rem;
       padding-right: 1.2rem;
@@ -52,7 +63,7 @@ const Wrapper = styled.div`
     }
     .nav-link:hover {
       padding-left: 3rem;
-      color: #2cb1bc;
+      color: #c2b0bf;
       transition: 0.3s ease-in-out all;
     }
     .icon {
