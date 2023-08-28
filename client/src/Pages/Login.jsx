@@ -1,13 +1,75 @@
 import styled from "styled-components";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/userContext";
 import Input from "../Components/Input";
 
 const Login = () => {
+  const { currentUser, setCurrentUser, setIsLoggedIn } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      const { name, email } = data.data;
+      const token = JSON.stringify(data.token);
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("name", JSON.stringify(name));
+      localStorage.setItem("email", JSON.stringify(email));
+
+      if (token) {
+        setIsLoggedIn(true);
+        setCurrentUser({
+          name,
+          email,
+        });
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      window.alert(error.message);
+    }
+  };
   return (
     <Wrapper>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <h4>Welcome to Habitly!</h4>
-        <Input name="email" type="email" labelText="Email" />
-        <Input name="password" type="password" labelText="Password" />
+        <Input
+          name="email"
+          type="email"
+          labelText="Email"
+          onChange={handleChange}
+        />
+        <Input
+          name="password"
+          type="password"
+          labelText="Password"
+          onChange={handleChange}
+        />
         <button type="submit" className="btn btn-block">
           Login
         </button>

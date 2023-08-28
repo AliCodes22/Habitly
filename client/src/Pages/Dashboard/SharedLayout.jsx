@@ -7,18 +7,19 @@ import styled from "styled-components";
 import { AuthContext } from "../../Context/userContext";
 
 const SharedLayout = () => {
-  const { user, isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  const currentToken = JSON.parse(localStorage.getItem("token"));
-  const [currentUser, setCurrentUser] = useState({});
+  const { currentUser, setCurrentUser, isLoggedIn, setIsLoggedIn } =
+    useContext(AuthContext);
+  const currentToken = localStorage.getItem("token");
 
   useEffect(() => {
     if (currentToken) {
       setIsLoggedIn(true);
-      setCurrentUser(JSON.parse(localStorage.getItem("name")));
+      setCurrentUser({
+        name: JSON.parse(localStorage.getItem("name")),
+        email: JSON.parse(localStorage.getItem("email")),
+      });
     }
-  }, [currentToken, currentUser]);
-
-  const navigate = useNavigate();
+  }, []);
 
   return (
     <Wrapper>

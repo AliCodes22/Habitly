@@ -7,7 +7,7 @@ const initialState = {
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState({
+  const [currentUser, setCurrentUser] = useState({
     name: "",
     email: "",
   });
@@ -22,8 +22,8 @@ export const AuthContextProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user,
-        setUser,
+        currentUser,
+        setCurrentUser,
         isLoggedIn,
         setIsLoggedIn,
         showSidebar,
