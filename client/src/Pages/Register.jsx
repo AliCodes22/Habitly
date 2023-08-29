@@ -18,8 +18,6 @@ const Register = () => {
     }));
   };
 
-  const { setUser, user } = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -43,7 +41,6 @@ const Register = () => {
       localStorage.setItem("name", JSON.stringify(name));
       localStorage.setItem("email", JSON.stringify(email));
 
-      setUser({ name, email });
       navigate("/dashboard");
     } catch (err) {
       window.alert(err.message);
@@ -103,9 +100,9 @@ const Wrapper = styled.section`
   .form {
     width: 90vw;
     max-width: 400px;
-    border-top: 5px solid red;
+    border-top: 2px solid red;
     background: #f8fafc;
-    border-radius: 0.25rem;
+    border-radius: 2rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
     padding: 2rem 2.5rem;

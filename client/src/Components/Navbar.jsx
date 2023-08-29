@@ -4,7 +4,7 @@ import { FaAlignLeft, FaUserCircle, FaCaretDown, FaUser } from "react-icons/fa";
 import { AuthContext } from "../Context/userContext";
 
 const Navbar = () => {
-  const { showSidebar, setShowSidebar, toggleSidebar } =
+  const { showSidebar, setShowSidebar, toggleSidebar, currentUser } =
     useContext(AuthContext);
 
   return (
@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className="btn-container">
           <button type="button" className="btn">
             <FaUserCircle />
-            Ali
+            {currentUser.name}
             <FaCaretDown />
           </button>
         </div>
