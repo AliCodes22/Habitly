@@ -8,6 +8,7 @@ const AddHabit = () => {
   const [value, setValue] = useState("");
   const handleSelect = (e) => {
     setValue(e.target.value);
+    console.log(e.target);
   };
 
   const [formData, setFormData] = useState({
@@ -54,6 +55,23 @@ const AddHabit = () => {
           labelText="Weekly frequency"
           onChange={handleChange}
         />
+        <label for="reason">Reason</label>
+        <textarea
+          style={{
+            width: "100%",
+            borderRadius: " 0.25rem",
+            background: "#f8fafc",
+            border: "1px solid gray",
+            color: "black",
+            height: "100px",
+          }}
+          id="reason"
+          name="reason"
+          rows={20}
+          cols={5}
+          placeholder="Add a reason for your desire of building or eliminating this habit"
+          onChange={handleChange}
+        ></textarea>
 
         <button type="submit" className="btn btn-block">
           Add habit
@@ -77,7 +95,7 @@ const Wrapper = styled.section`
   }
   .form {
     width: 90vw;
-    height: 75vh;
+    height: 85vh;
     max-width: 400px;
     border-top: 5px solid red;
     background: #f8fafc;
