@@ -5,7 +5,7 @@ import { AuthContext } from "../Context/userContext";
 import Input from "../Components/Input";
 
 const Login = () => {
-  const { currentUser, setCurrentUser, setIsLoggedIn } =
+  const { currentUser, setCurrentUser, setIsLoggedIn, setCurrentUserId } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -48,6 +48,7 @@ const Login = () => {
           name,
           email,
         });
+
         navigate("/dashboard");
       }
     } catch (error) {

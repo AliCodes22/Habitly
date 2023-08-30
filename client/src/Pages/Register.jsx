@@ -19,6 +19,7 @@ const Register = () => {
   };
 
   const navigate = useNavigate();
+  const { currentUserId, setCurrentUserId } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,12 +35,13 @@ const Register = () => {
       const data = await res.json();
       console.log(data);
 
-      const { name, email } = data.data;
+      const { name, email, userId } = data.data;
       const token = JSON.stringify(data.token);
 
       localStorage.setItem("token", token);
       localStorage.setItem("name", JSON.stringify(name));
       localStorage.setItem("email", JSON.stringify(email));
+      setCurrentUserId(userId);
 
       navigate("/dashboard");
     } catch (err) {

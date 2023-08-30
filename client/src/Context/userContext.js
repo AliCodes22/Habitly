@@ -11,6 +11,7 @@ export const AuthContextProvider = ({ children }) => {
     name: "",
     email: "",
   });
+  const [currentUserId, setCurrentUserId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -29,6 +30,8 @@ export const AuthContextProvider = ({ children }) => {
         showSidebar,
         setShowSidebar,
         toggleSidebar,
+        currentUserId,
+        setCurrentUserId,
       }}
     >
       {children}

@@ -6,6 +6,8 @@ import Input from "../../Components/Input";
 
 const AddHabit = () => {
   //state
+  const { userId } = useContext(AuthContext);
+
   const [value, setValue] = useState("");
   const [textBody, setTextBody] = useState("");
   const [formData, setFormData] = useState({
@@ -14,6 +16,7 @@ const AddHabit = () => {
     frequency: "",
     value,
     textBody,
+    userId,
   });
 
   const token = localStorage.getItem("token");
