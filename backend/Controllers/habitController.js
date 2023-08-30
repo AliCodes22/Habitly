@@ -30,14 +30,24 @@ const createHabit = async (req, res, next) => {
   }
 
   const client = new MongoClient(MONGO_URI, options);
+  const newHabit = req.body;
+  const { userId } = req.body;
 
   try {
     await client.connect();
-    const db = client.db("habitly");
 
-    res.status(201).json({
-      message: "create habit",
-    });
+    const db = client.db("habitly");
+    const result = await db
+      .collection("users")
+      .updateOne({ userId }, { $push: { habits: newHabit } });
+
+    if (result.modifiedCount === 1) {
+      res
+        .status(201)
+        .json({ message: "Habit added successfully", data: newHabit });
+    } else {
+      res.status(400).json({ message: "Failed to add habit" });
+    }
   } catch (err) {
     next(err);
   }
