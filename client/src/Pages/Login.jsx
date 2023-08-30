@@ -33,7 +33,7 @@ const Login = () => {
       });
 
       const data = await res.json();
-      console.log(data);
+      console.log(data.token);
 
       const { name, email } = data.data;
       const token = JSON.stringify(data.token);

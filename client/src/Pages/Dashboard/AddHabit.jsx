@@ -1,39 +1,26 @@
 import styled from "styled-components";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/userContext";
 import Input from "../../Components/Input";
 
 const AddHabit = () => {
   //state
-  const { userId } = useContext(AuthContext);
 
-  const [value, setValue] = useState("");
-  const [textBody, setTextBody] = useState("");
+  const [textBody, setTextBody] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
-    breakOrQuit: "",
     frequency: "",
-    value,
-    textBody,
-    userId,
+    buildOrQuit: "",
+    reason: "",
+    email: JSON.parse(localStorage.getItem("email")),
   });
 
   const token = localStorage.getItem("token");
 
   // event handlers
-  const handleSelect = (e) => {
-    setValue(e.target.value);
-    console.log(e.target);
-  };
 
   const handleChange = (e) => {
-    if (e.target.value <= 1) {
-      e.target.value = 1;
-    } else if (e.target.value >= 7) {
-      e.target.value = 7;
-    }
-
     setFormData((prev) => {
       return {
         ...prev,
@@ -45,38 +32,47 @@ const AddHabit = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!token) {
-      return;
-    }
-
     const res = await fetch("/api/habits", {
       method: "POST",
-      body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(formData),
     });
-
-    const data = await res.json();
+    console.log(res);
   };
 
   return (
     <Wrapper>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <h4>Add a new habit!</h4>
-        <Input name="name" type="text" labelText="Habit Name" required />
+        <Input
+          name="name"
+          type="text"
+          labelText="Habit Name"
+          value={formData.name}
+          required
+          onChange={handleChange}
+        />
 
-        <label htmlFor="break-or-quit">Break or Quit?</label>
+        <label htmlFor="buildOrQuit">Build or Quit?</label>
         <select
-          name="break-or-quit"
-          id="break-or-quit"
+          name="buildOrQuit"
+          id="buildOrQuit"
           className="form-input"
-          onChange={handleSelect}
-          value={value}
+          onChange={(e) => {
+            setFormData((prev) => {
+              return {
+                ...prev,
+                [e.target.name]: e.target.value,
+              };
+            });
+          }}
+          value={formData.buildOrQuit}
           required
         >
-          <option value="break">Break</option>
+          <option value="build">Build</option>
           <option value="quit">Quit</option>
         </select>
 
@@ -84,13 +80,23 @@ const AddHabit = () => {
           name="frequency"
           type="number"
           labelText="Weekly frequency"
+          value={formData.frequency}
           onChange={(e) => {
-            console.log(e);
-            setTextBody(e.target.value);
+            if (e.target.value < 1) {
+              e.target.value = 1;
+            } else if (e.target.value > 7) {
+              e.target.value = 7;
+            }
+            setFormData((prev) => {
+              return {
+                ...prev,
+                [e.target.name]: e.target.value,
+              };
+            });
           }}
           required
         />
-        <label for="reason">Reason</label>
+        <label htmlFor="reason">Reason</label>
         <textarea
           style={{
             width: "100%",
@@ -105,7 +111,12 @@ const AddHabit = () => {
           rows={20}
           cols={5}
           onChange={(e) => {
-            setTextBody(e.target.value);
+            setFormData((prev) => {
+              return {
+                ...prev,
+                [e.target.name]: e.target.value,
+              };
+            });
           }}
           required
         ></textarea>
