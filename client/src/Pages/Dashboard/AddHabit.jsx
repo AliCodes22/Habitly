@@ -5,19 +5,24 @@ import { AuthContext } from "../../Context/userContext";
 import Input from "../../Components/Input";
 
 const AddHabit = () => {
+  //state
   const [value, setValue] = useState("");
-  const handleSelect = (e) => {
-    setValue(e.target.value);
-    console.log(e.target);
-  };
-
+  const [textBody, setTextBody] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     breakOrQuit: "",
     frequency: "",
-
     value,
+    textBody,
   });
+
+  const token = localStorage.getItem("token");
+
+  // event handlers
+  const handleSelect = (e) => {
+    setValue(e.target.value);
+    console.log(e.target);
+  };
 
   const handleChange = (e) => {
     if (e.target.value <= 1) {
@@ -25,17 +30,39 @@ const AddHabit = () => {
     } else if (e.target.value >= 7) {
       e.target.value = 7;
     }
+
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!token) {
+      return;
+    }
+
+    const res = await fetch("/api/habits", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
   };
 
   return (
     <Wrapper>
       <form className="form">
         <h4>Add a new habit!</h4>
-        <Input name="name" type="text" labelText="Habit Name" />
+        <Input name="name" type="text" labelText="Habit Name" required />
 
         <label htmlFor="break-or-quit">Break or Quit?</label>
         <select
@@ -44,6 +71,7 @@ const AddHabit = () => {
           className="form-input"
           onChange={handleSelect}
           value={value}
+          required
         >
           <option value="break">Break</option>
           <option value="quit">Quit</option>
@@ -53,7 +81,11 @@ const AddHabit = () => {
           name="frequency"
           type="number"
           labelText="Weekly frequency"
-          onChange={handleChange}
+          onChange={(e) => {
+            console.log(e);
+            setTextBody(e.target.value);
+          }}
+          required
         />
         <label for="reason">Reason</label>
         <textarea
@@ -69,8 +101,10 @@ const AddHabit = () => {
           name="reason"
           rows={20}
           cols={5}
-          placeholder="Add a reason for your desire of building or eliminating this habit"
-          onChange={handleChange}
+          onChange={(e) => {
+            setTextBody(e.target.value);
+          }}
+          required
         ></textarea>
 
         <button type="submit" className="btn btn-block">
