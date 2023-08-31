@@ -33,7 +33,6 @@ const Login = () => {
       });
 
       const data = await res.json();
-      console.log(data.data);
 
       const { name, email, userId } = data.data;
       const token = JSON.stringify(data.token);

@@ -11,24 +11,34 @@ const AllHabits = () => {
 
   useEffect(() => {
     const fetchHabits = async () => {
-      const res = await fetch(`/api/habits/${userId}`);
-      const data = await res.json();
-      console.log(data);
+      try {
+        const res = await fetch(`/api/habits/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      if (res.ok) {
-        setHabits(data);
+        const data = await res.json();
+
+        if (res.ok) {
+          setHabits(data.data);
+        }
+      } catch (error) {
+        console.log(error.message);
       }
-
-      fetchHabits();
     };
-  }, [habits]);
+
+    fetchHabits();
+  }, [userId, token]);
 
   return (
     <div>
       <Grid container>
-        <Grid item>
-          <Paper>1</Paper>
-        </Grid>
+        {habits.map((habit) => (
+          <Grid item key={habit.id}>
+            <Paper>{habit.name}</Paper>
+          </Grid>
+        ))}
       </Grid>
     </div>
   );
