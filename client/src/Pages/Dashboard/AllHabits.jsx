@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import Container from "@material-ui/core/Container";
 
 const AllHabits = () => {
   const token = JSON.parse(localStorage.getItem("token"));
@@ -32,15 +33,15 @@ const AllHabits = () => {
   }, [userId, token]);
 
   return (
-    <div>
-      <Grid container>
+    <Container>
+      <Grid container spacing={3}>
         {habits.map((habit) => (
-          <Grid item key={habit.id}>
-            <Paper>{habit.name}</Paper>
+          <Grid item key={habit.id} xs={12} md={6} lg={4}>
+            <HabitCard habit={habit} />
           </Grid>
         ))}
       </Grid>
-    </div>
+    </Container>
   );
 };
 

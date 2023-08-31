@@ -3,7 +3,7 @@ import { MdQueryStats } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 
-const currentUserId = localStorage.getItem("userId");
+const currentUserId = JSON.parse(localStorage.getItem("userId"));
 
 const links = [
   { id: 1, text: "stats", path: "/dashboard/stats", icon: <IoBarChartSharp /> },
