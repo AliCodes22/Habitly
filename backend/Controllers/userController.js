@@ -13,7 +13,7 @@ const options = {
 
 // create token
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "20d" });
 };
 
 const client = new MongoClient(MONGO_URI, options);
@@ -32,12 +32,6 @@ const loginUser = async (req, res) => {
     const user = await db.collection("users").findOne({ email });
     const match = await bcrypt.compare(password, user.password);
     const token = createToken(user._id);
-
-    if (!match) {
-      return res.status(401).json({
-        message: "Unauthorized",
-      });
-    }
 
     res.status(201).json({
       data: user,

@@ -25,13 +25,13 @@ const getHabits = async (req, res, next) => {
 };
 
 const createHabit = async (req, res, next) => {
-  if (!req.body.text) {
+  if (!req.body) {
     throw new Error("please enter text");
   }
 
   const client = new MongoClient(MONGO_URI, options);
   const newHabit = req.body;
-  const { userId } = req.body;
+  const { email } = req.body;
 
   try {
     await client.connect();
@@ -39,7 +39,7 @@ const createHabit = async (req, res, next) => {
     const db = client.db("habitly");
     const result = await db
       .collection("users")
-      .updateOne({ userId }, { $push: { habits: newHabit } });
+      .updateOne({ email }, { $push: { habits: newHabit } });
 
     if (result.modifiedCount === 1) {
       res
