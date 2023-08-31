@@ -10,7 +10,7 @@ const requireAuth = require("../Middleware/authMiddleware");
 
 router.use(requireAuth);
 // get all habits
-router.get("/", getHabits);
+router.get("/:userId", getHabits);
 
 // create new habit
 router.post("/", createHabit);

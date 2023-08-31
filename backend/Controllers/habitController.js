@@ -10,13 +10,15 @@ const { v4: uuidv4 } = require("uuid");
 // get habits
 const getHabits = async (req, res, next) => {
   const client = new MongoClient(MONGO_URI, options);
+  const { userId } = req.params;
 
   try {
     await client.connect();
     const db = client.db("habitly");
+    const user = await db.collection("users").findOne({ userId });
 
     res.status(200).json({
-      message: "working habits",
+      data: user.habits,
       status: 200,
     });
   } catch (err) {
@@ -30,7 +32,7 @@ const createHabit = async (req, res, next) => {
   }
 
   const client = new MongoClient(MONGO_URI, options);
-  const newHabit = req.body;
+  const newHabit = { ...req.body, id: uuidv4() };
   const { email } = req.body;
 
   try {
