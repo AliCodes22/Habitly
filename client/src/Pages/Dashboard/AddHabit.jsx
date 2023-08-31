@@ -16,7 +16,7 @@ const AddHabit = () => {
     email: JSON.parse(localStorage.getItem("email")),
   });
 
-  const token = localStorage.getItem("token");
+  const token = JSON.parse(localStorage.getItem("token"));
 
   // event handlers
 
