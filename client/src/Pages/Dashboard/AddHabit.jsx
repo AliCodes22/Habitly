@@ -17,6 +17,7 @@ const AddHabit = () => {
   });
 
   const token = JSON.parse(localStorage.getItem("token"));
+  const navigate = useNavigate();
 
   // event handlers
 
@@ -31,16 +32,19 @@ const AddHabit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const res = await fetch("/api/habits", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(formData),
-    });
-    console.log(res);
+    try {
+      const res = await fetch("/api/habits", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+      navigate("/dashboard/habits");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   return (

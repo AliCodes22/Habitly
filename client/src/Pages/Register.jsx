@@ -19,7 +19,7 @@ const Register = () => {
   };
 
   const navigate = useNavigate();
-  const { currentUserId, setCurrentUserId } = useContext(AuthContext);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +41,11 @@ const Register = () => {
       localStorage.setItem("token", token);
       localStorage.setItem("name", JSON.stringify(name));
       localStorage.setItem("email", JSON.stringify(email));
-      setCurrentUserId(userId);
+      setCurrentUser({
+        name,
+        email,
+        userId,
+      });
 
       navigate("/dashboard");
     } catch (err) {

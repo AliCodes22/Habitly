@@ -33,23 +33,25 @@ const Login = () => {
       });
 
       const data = await res.json();
-      console.log(data.token);
+      console.log(data.data);
 
-      const { name, email } = data.data;
+      const { name, email, userId } = data.data;
       const token = JSON.stringify(data.token);
 
       localStorage.setItem("token", token);
       localStorage.setItem("name", JSON.stringify(name));
       localStorage.setItem("email", JSON.stringify(email));
+      localStorage.setItem("userId", JSON.stringify(userId));
 
       if (token) {
         setIsLoggedIn(true);
         setCurrentUser({
           name,
           email,
+          userId,
         });
 
-        navigate("/dashboard");
+        navigate(`/dashboard/habits/${userId}`);
       }
     } catch (error) {
       window.alert(error.message);
