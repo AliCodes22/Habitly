@@ -19,7 +19,6 @@ const getHabits = async (req, res, next) => {
 
     res.status(200).json({
       data: user.habits,
-      status: 200,
     });
   } catch (err) {
     next(err);
@@ -32,7 +31,7 @@ const createHabit = async (req, res, next) => {
   }
 
   const client = new MongoClient(MONGO_URI, options);
-  const newHabit = { ...req.body, id: uuidv4() };
+  const newHabit = { ...req.body, habitId: uuidv4() };
   const { email } = req.body;
 
   try {
@@ -67,12 +66,24 @@ const updateHabit = (req, res, next) => {
   }
 };
 
-const deleteHabit = (req, res, next) => {
-  const { id } = req.params;
+const deleteHabit = async (req, res, next) => {
+  const { userId, id } = req.params;
+  const client = new MongoClient(MONGO_URI, options);
 
   try {
+    await client.connect();
+    const db = client.db("habitly");
+    const user = await db.collection("users").findOne({ userId });
+
+    user.habits = user.habits.filter((habit) => habit.habitId !== id);
+
+    await db
+      .collection("users")
+      .updateOne({ userId }, { $set: { habits: user.habits } });
+
     res.status(200).json({
       message: `Delete habit ${id} `,
+      data: user.habits,
     });
   } catch (err) {
     next(err);

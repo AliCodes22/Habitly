@@ -19,6 +19,6 @@ router.post("/", createHabit);
 router.patch("/:id", updateHabit);
 
 // delete habit
-router.delete("/:id", deleteHabit);
+router.delete("/:userId/:id", deleteHabit);
 
 module.exports = { router };
