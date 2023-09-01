@@ -17,6 +17,7 @@ const AddHabit = () => {
   });
 
   const token = JSON.parse(localStorage.getItem("token"));
+  const userId = JSON.parse(localStorage.getItem("userId"));
   const navigate = useNavigate();
 
   // event handlers
@@ -41,7 +42,7 @@ const AddHabit = () => {
         },
         body: JSON.stringify(formData),
       });
-      navigate("/dashboard/habits");
+      navigate(`/dashboard/habits/${userId}`);
     } catch (err) {
       console.log(err.message);
     }
@@ -76,8 +77,8 @@ const AddHabit = () => {
           value={formData.buildOrQuit}
           required
         >
-          <option value="build">Build</option>
-          <option value="quit">Quit</option>
+          <option value="Build">Build</option>
+          <option value="Quit">Quit</option>
         </select>
 
         <Input

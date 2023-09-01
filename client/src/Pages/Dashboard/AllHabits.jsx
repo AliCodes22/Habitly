@@ -1,4 +1,5 @@
 import HabitCard from "../../Components/HabitCard";
+import Loading from "../../Components/Loading";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
@@ -30,14 +31,35 @@ const AllHabits = () => {
     };
 
     fetchHabits();
-  }, [userId, token]);
+  }, [userId, token, habits]);
 
-  return (
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(`/api/habits/${userId}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = res.json();
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  return !habits.length ? (
+    <Loading />
+  ) : (
     <Container>
       <Grid container spacing={3}>
         {habits.map((habit) => (
-          <Grid item key={habit.id} xs={12} md={6} lg={4}>
-            <HabitCard habit={habit} />
+          <Grid item key={habit.habitId} xs={12} md={6} lg={4}>
+            <HabitCard
+              habit={habit}
+              onDelete={() => {
+                handleDelete(habit.habitId);
+              }}
+            />
           </Grid>
         ))}
       </Grid>

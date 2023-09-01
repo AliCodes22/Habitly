@@ -5,17 +5,19 @@ import Typography from "@mui/material/Typography";
 import { IconButton } from "@material-ui/core";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-const HabitCard = ({ habit }) => {
+const HabitCard = ({ habit, onDelete }) => {
   return (
     <div>
-      <Card elevation={5}>
+      <Card
+        elevation={5}
+        style={{
+          background: "#fffafa",
+        }}
+        variant="outlined"
+      >
         <CardHeader
           action={
-            <IconButton
-              onClick={() => {
-                console.log("delete me");
-              }}
-            >
+            <IconButton onClick={onDelete}>
               <DeleteOutlineIcon />
             </IconButton>
           }
@@ -23,7 +25,12 @@ const HabitCard = ({ habit }) => {
           subheader={habit.buildOrQuit}
         />
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            fontWeight={200}
+            fontSize={20}
+          >
             {habit.reason}
           </Typography>
         </CardContent>

@@ -53,7 +53,7 @@ const Login = () => {
         navigate(`/dashboard/habits/${userId}`);
       }
     } catch (error) {
-      window.alert(error.message);
+      window.alert("Invalid user");
     }
   };
   return (
