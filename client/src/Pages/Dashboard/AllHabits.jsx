@@ -47,7 +47,7 @@ const AllHabits = () => {
     }
   };
 
-  return !habits.length ? (
+  return !habits ? (
     <Loading />
   ) : (
     <Container>

@@ -4,6 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { IconButton } from "@material-ui/core";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import Checkbox from "@mui/material/Checkbox";
 
 const HabitCard = ({ habit, onDelete }) => {
   return (
@@ -33,6 +34,7 @@ const HabitCard = ({ habit, onDelete }) => {
           >
             {habit.reason}
           </Typography>
+          <Checkbox />
         </CardContent>
       </Card>
     </div>

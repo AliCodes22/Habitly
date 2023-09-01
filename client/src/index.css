@@ -54,15 +54,40 @@ ul {
 }
 
 .btn:hover {
-  background: #dfc5bd;
+  background: #464548;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
+.btn-block {
+  width: 100%;
+}
+.form {
+  width: 90vw;
+  max-width: 1120px;
+  background: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 2rem 2.5rem;
+  margin: 3rem auto;
+  transition: 0.3s ease-in-out all;
+}
 .form-input {
   width: 100%;
-  margin-top: 1.5rem;
   padding: 0.375rem 0.75rem;
-  border-radius: 2rem;
-  background: #a39797;
-  border: 1px solid #843c3c;
+  border-radius: 0.2rem;
+  background: #d3d2d2;
+  border: 1px solid #e51010;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+.form-row {
+  margin-bottom: 1rem;
 }
