@@ -96,7 +96,42 @@ const registerUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  await client.connect();
+
+  const { id } = req.params;
+
+  try {
+    const { name, email } = req.body;
+
+    const db = client.db("habitly");
+    const collection = db.collection("users");
+    const result = await collection.updateOne(
+      { userId: id },
+      { $set: { name, email } }
+    );
+
+    const updatedUser = await collection.findOne({ userId: id });
+
+    if (result.matchedCount === 0) {
+      // User with the given userId not found
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // User information updated successfully
+    res.status(200).json({
+      message: "User information updated successfully",
+      data: updatedUser,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   loginUser,
   registerUser,
+  updateUser,
 };
