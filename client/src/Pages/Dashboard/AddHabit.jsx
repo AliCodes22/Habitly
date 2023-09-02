@@ -12,7 +12,7 @@ const AddHabit = () => {
     name: "",
     frequency: "",
     buildOrQuit: "",
-    reason: "",
+    description: "",
     email: JSON.parse(localStorage.getItem("email")),
   });
 
@@ -101,7 +101,7 @@ const AddHabit = () => {
           }}
           required
         />
-        <label htmlFor="reason">Reason</label>
+        <label htmlFor="description">Description</label>
         <textarea
           style={{
             width: "100%",
@@ -111,8 +111,8 @@ const AddHabit = () => {
             color: "black",
             height: "100px",
           }}
-          id="reason"
-          name="reason"
+          id="description"
+          name="description"
           rows={20}
           cols={5}
           onChange={(e) => {
