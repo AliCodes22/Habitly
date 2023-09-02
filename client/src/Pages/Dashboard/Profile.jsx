@@ -11,12 +11,17 @@ const Profile = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
   const token = JSON.parse(localStorage.getItem("token"));
 
-  const [name, setName] = useState(currentUser?.name);
-  const [email, setEmail] = useState(currentUser?.email);
+  const [name, setName] = useState(currentUser?.name || "");
+  const [email, setEmail] = useState(currentUser?.email || "");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(name);
+
+    if (name !== currentUser.name || email !== currentUser.email) {
+      toast.success("User updated successfully");
+    }
 
     const res = await fetch(`/api/user/${userId}`, {
       method: "PATCH",
@@ -27,16 +32,15 @@ const Profile = () => {
       body: JSON.stringify({ name, email }),
     });
     const data = await res.json();
+
+    console.log(data);
+
     setCurrentUser({
       ...currentUser,
       name: data.data.name,
       email: data.data.email,
     });
-
-    toast.success("User updated successfully");
   };
-
-  useEffect(() => {}, [name, email]);
 
   return !currentUser ? (
     navigate("/")

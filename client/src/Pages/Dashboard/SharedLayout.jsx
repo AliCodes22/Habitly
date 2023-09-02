@@ -17,6 +17,7 @@ const SharedLayout = () => {
       setCurrentUser({
         name: JSON.parse(localStorage.getItem("name")),
         email: JSON.parse(localStorage.getItem("email")),
+        userId: JSON.parse(localStorage.getItem("userId")),
       });
     }
   }, []);

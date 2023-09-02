@@ -42,6 +42,7 @@ const Register = () => {
       localStorage.setItem("name", JSON.stringify(name));
       localStorage.setItem("email", JSON.stringify(email));
       localStorage.setItem("userId", JSON.stringify(userId));
+
       setCurrentUser({
         name,
         email,
