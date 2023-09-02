@@ -31,7 +31,7 @@ const AllHabits = () => {
     };
 
     fetchHabits();
-  }, [userId, token, habits]);
+  }, [userId, token]);
 
   const handleDelete = async (id) => {
     try {
@@ -47,6 +47,20 @@ const AllHabits = () => {
     }
   };
 
+  const handleProgress = async (id) => {
+    try {
+      const res = await fetch(`/api/habits/${userId}/${id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = res.json();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return !habits ? (
     <Loading />
   ) : (
@@ -58,6 +72,9 @@ const AllHabits = () => {
               habit={habit}
               onDelete={() => {
                 handleDelete(habit.habitId);
+              }}
+              handleClick={() => {
+                handleProgress(habit.habitId);
               }}
             />
           </Grid>
