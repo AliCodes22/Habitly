@@ -6,10 +6,10 @@ const options = {
   useUnifiedTopology: true,
 };
 const { v4: uuidv4 } = require("uuid");
+const client = new MongoClient(MONGO_URI, options);
 
 // get habits
 const getHabits = async (req, res, next) => {
-  const client = new MongoClient(MONGO_URI, options);
   const { userId } = req.params;
 
   try {
@@ -30,8 +30,7 @@ const createHabit = async (req, res, next) => {
     throw new Error("please enter text");
   }
 
-  const client = new MongoClient(MONGO_URI, options);
-  const newHabit = { ...req.body, habitId: uuidv4() };
+  const newHabit = { ...req.body, habitId: uuidv4(), progress: 0 };
   const { email } = req.body;
 
   try {
@@ -54,12 +53,24 @@ const createHabit = async (req, res, next) => {
   }
 };
 
-const updateHabit = (req, res, next) => {
-  const { id } = req.params;
+const updateHabit = async (req, res, next) => {
+  const { userId, id } = req.params;
 
   try {
+    await client.connect();
+    const db = client.db("habitly");
+
+    const user = await db.collection("users").findOne({ userId });
+    const habit = user.habits.find((h) => h.id === id);
+
+    if (habit) {
+      habit.progress += progress;
+
+      await db.collection("users").updateOne({ userId }, { $set: user });
+    }
+
     res.status(200).json({
-      message: "update habit",
+      data: user,
     });
   } catch (err) {
     res.status(err.status).json;
@@ -68,7 +79,6 @@ const updateHabit = (req, res, next) => {
 
 const deleteHabit = async (req, res, next) => {
   const { userId, id } = req.params;
-  const client = new MongoClient(MONGO_URI, options);
 
   try {
     await client.connect();

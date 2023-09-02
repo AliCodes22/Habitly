@@ -16,7 +16,7 @@ router.get("/:userId", getHabits);
 router.post("/", createHabit);
 
 // update habit
-router.patch("/:id", updateHabit);
+router.put("/:userId/:id", updateHabit);
 
 // delete habit
 router.delete("/:userId/:id", deleteHabit);
