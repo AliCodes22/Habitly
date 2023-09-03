@@ -61,19 +61,26 @@ const updateHabit = async (req, res, next) => {
     const db = client.db("habitly");
 
     const user = await db.collection("users").findOne({ userId });
-    const habit = user.habits.find((h) => h.id === id);
+    const habit = user.habits.find((habit) => habit.habitId === id);
 
     if (habit) {
-      habit.progress += progress;
-
-      await db.collection("users").updateOne({ userId }, { $set: user });
+      habit.progress++;
     }
 
+    if (habit.progress > habit.frequency) {
+      habit.progress = habit.frequency;
+    }
+
+    await db.collection("users").updateOne({ userId }, { $set: user });
+
     res.status(200).json({
-      data: user,
+      message: "success",
+      data: habit,
     });
   } catch (err) {
-    res.status(err.status).json;
+    res.status(400).json({
+      message: err.message,
+    });
   }
 };
 
