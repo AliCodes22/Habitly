@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
@@ -12,38 +12,49 @@ const HabitCard = ({ habit, onDelete, handleClick }) => {
   const { name, buildOrQuit, description, frequency, progress } = habit;
   const [completedDays, setCompletedDays] = useState([]);
 
-  const currentProgress = `${completedDays.length}`;
-
-  // Function to handle checkbox click
   const handleCheckboxClick = (day) => {
-    if (completedDays.includes(day)) {
-      // If the day is already in the completedDays array, remove it
-      setCompletedDays(completedDays.filter((d) => d !== day));
-    } else if (completedDays.length < frequency) {
-      // If the user hasn't reached the frequency count, add the day
-      setCompletedDays([...completedDays, day]);
-    }
+    // Update the checkbox states in local storage
+    const updatedCompletedDays = completedDays.includes(day)
+      ? completedDays.filter((d) => d !== day)
+      : [...completedDays, day];
+    localStorage.setItem(
+      `habit_${habit.habitId}_checkboxes`,
+      JSON.stringify(updatedCompletedDays)
+    );
 
-    const progressValue = completedDays.length;
+    // Update the state
+    setCompletedDays(updatedCompletedDays);
+
+    // Calculate progress based on the number of checked checkboxes
+    const progressValue = updatedCompletedDays.length;
+    // Pass both the id and progressValue to the parent component's handleProgress function
     handleClick(habit.habitId, progressValue);
   };
 
+  useEffect(() => {
+    const storedCheckboxStates = JSON.parse(
+      localStorage.getItem(`habit_${habit.habitId}_checkboxes`)
+    );
+    if (storedCheckboxStates) {
+      setCompletedDays(storedCheckboxStates);
+    }
+  }, [habit.habitId]);
+
   // Generate checkboxes for each day of the week
-  const checkboxes = [...Array(Number(habit.frequency)).keys()].map((day) => {
-    const isChecked = completedDays.includes(day);
+  const checkboxes = [...Array(Number(habit.frequency)).keys()].map((num) => {
+    const isChecked = completedDays.includes(num);
     return (
       <FormControlLabel
-        key={day}
+        key={num}
         control={
           <Checkbox
             checked={isChecked}
             onChange={() => {
-              if (isChecked) {
-                handleCheckboxClick(day);
-              }
+              handleCheckboxClick(num);
             }}
             onClick={handleClick}
             color="secondary" // Use 'primary' or 'secondary' color depending on your design
+            disabled={isChecked}
           />
         }
       />
@@ -81,7 +92,7 @@ const HabitCard = ({ habit, onDelete, handleClick }) => {
           </Typography>
           <div className="checkboxes">{checkboxes}</div>
           <div className="progress">
-            <p>Progress: {currentProgress}</p>
+            <p>Progress: {habit.progress}</p>
           </div>
         </CardContent>
       </Card>

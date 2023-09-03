@@ -11,29 +11,30 @@ import "react-toastify/dist/ReactToastify.css";
 const AllHabits = () => {
   const token = JSON.parse(localStorage.getItem("token"));
   const [habits, setHabits] = useState([]);
+  const [showProgress, setShowProgress] = useState("");
   const { userId } = useParams();
 
-  useEffect(() => {
-    const fetchHabits = async () => {
-      try {
-        const res = await fetch(`/api/habits/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  const fetchHabitsData = async () => {
+    try {
+      const res = await fetch(`/api/habits/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        const data = await res.json();
+      const data = await res.json();
 
-        if (res.ok) {
-          setHabits(data.data);
-        }
-      } catch (error) {
-        console.log(error.message);
+      if (res.ok) {
+        setHabits(data.data);
       }
-    };
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-    fetchHabits();
-  }, [habits.length]);
+  useEffect(() => {
+    fetchHabitsData();
+  }, [userId, token]);
 
   const handleDelete = async (id) => {
     try {
@@ -48,7 +49,7 @@ const AllHabits = () => {
         setHabits((prevHabits) =>
           prevHabits.filter((habit) => habit.habitId !== id)
         );
-        toast.success("Habit deleted successfully");
+        fetchHabitsData();
       }
     } catch (err) {
       console.log(err.message);
@@ -64,6 +65,10 @@ const AllHabits = () => {
         },
       });
       const data = await res.json();
+
+      if (data) {
+        fetchHabitsData();
+      }
     } catch (err) {
       console.log(err);
     }
