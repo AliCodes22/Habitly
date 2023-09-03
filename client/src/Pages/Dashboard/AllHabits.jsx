@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AllHabits = () => {
   const token = JSON.parse(localStorage.getItem("token"));
@@ -31,7 +33,7 @@ const AllHabits = () => {
     };
 
     fetchHabits();
-  }, [userId, token]);
+  }, [habits.length]);
 
   const handleDelete = async (id) => {
     try {
@@ -41,13 +43,19 @@ const AllHabits = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = res.json();
+
+      if (res.ok) {
+        setHabits((prevHabits) =>
+          prevHabits.filter((habit) => habit.habitId !== id)
+        );
+        toast.success("Habit deleted successfully");
+      }
     } catch (err) {
       console.log(err.message);
     }
   };
 
-  const handleProgress = async (id) => {
+  const handleProgress = async (id, progressValue) => {
     try {
       const res = await fetch(`/api/habits/${userId}/${id}`, {
         method: "PUT",
@@ -55,7 +63,7 @@ const AllHabits = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = res.json();
+      const data = await res.json();
     } catch (err) {
       console.log(err);
     }
@@ -74,7 +82,7 @@ const AllHabits = () => {
                 handleDelete(habit.habitId);
               }}
               handleClick={() => {
-                handleProgress(habit.habitId);
+                handleProgress(habit.habitId, habit.progress);
               }}
             />
           </Grid>

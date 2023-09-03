@@ -9,10 +9,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const HabitCard = ({ habit, onDelete, handleClick }) => {
-  const { name, buildOrQuit, description, frequency } = habit;
+  const { name, buildOrQuit, description, frequency, progress } = habit;
   const [completedDays, setCompletedDays] = useState([]);
 
-  const progress = (completedDays.length / frequency) * 100;
+  const currentProgress = `${completedDays.length}`;
 
   // Function to handle checkbox click
   const handleCheckboxClick = (day) => {
@@ -23,6 +23,9 @@ const HabitCard = ({ habit, onDelete, handleClick }) => {
       // If the user hasn't reached the frequency count, add the day
       setCompletedDays([...completedDays, day]);
     }
+
+    const progressValue = completedDays.length;
+    handleClick(habit.habitId, progressValue);
   };
 
   // Generate checkboxes for each day of the week
@@ -34,9 +37,13 @@ const HabitCard = ({ habit, onDelete, handleClick }) => {
         control={
           <Checkbox
             checked={isChecked}
-            onChange={() => handleCheckboxClick(day)}
+            onChange={() => {
+              if (isChecked) {
+                handleCheckboxClick(day);
+              }
+            }}
             onClick={handleClick}
-            color="primary" // Use 'primary' or 'secondary' color depending on your design
+            color="secondary" // Use 'primary' or 'secondary' color depending on your design
           />
         }
       />
@@ -73,7 +80,9 @@ const HabitCard = ({ habit, onDelete, handleClick }) => {
             {description}
           </Typography>
           <div className="checkboxes">{checkboxes}</div>
-          <div className="progress">Progress: {progress.toFixed(2)}%</div>
+          <div className="progress">
+            <p>Progress: {currentProgress}</p>
+          </div>
         </CardContent>
       </Card>
     </div>
