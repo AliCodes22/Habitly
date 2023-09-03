@@ -11,7 +11,6 @@ import {
 } from "recharts";
 
 const Stats = () => {
-  // Sample habit data (replace with your actual data)
   const sampleHabits = [
     { name: "Meditate", progress: 5 },
     { name: "Stretch", progress: 8 },
@@ -46,7 +45,7 @@ const Stats = () => {
           }}
         />
         <Legend />
-        <Bar dataKey="progress" fill="#8884d8" />
+        <Bar dataKey="progress" fill="#fff0e" />
       </BarChart>
     </ResponsiveContainer>
   );

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useAsyncError, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { FaAlignLeft, FaUserCircle, FaCaretDown, FaUser } from "react-icons/fa";
 import { AuthContext } from "../Context/userContext";
@@ -6,7 +7,7 @@ import { AuthContext } from "../Context/userContext";
 const Navbar = () => {
   const { showSidebar, setShowSidebar, toggleSidebar, currentUser } =
     useContext(AuthContext);
-
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <div className="nav-center">
@@ -20,7 +21,16 @@ const Navbar = () => {
           <button type="button" className="btn">
             <FaUserCircle />
             {currentUser.name}
-            <FaCaretDown />
+          </button>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => {
+              localStorage.clear();
+              navigate("/");
+            }}
+          >
+            Logout
           </button>
         </div>
       </div>
@@ -49,6 +59,10 @@ const Wrapper = styled.nav`
     cursor: pointer;
     display: flex;
     align-items: center;
+  }
+
+  .btn {
+    margin-left: 5px;
   }
   .logo-text {
     display: none;
